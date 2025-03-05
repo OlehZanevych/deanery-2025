@@ -1,5 +1,7 @@
 package org.lnu.teaching.web.application.design.deanery.service.faculty.impl;
 
+import lombok.extern.java.Log;
+import org.lnu.teaching.web.application.design.deanery.annotation.TrackExecution;
 import org.lnu.teaching.web.application.design.deanery.dto.common.ValueDto;
 import org.lnu.teaching.web.application.design.deanery.dto.faculty.BaseFacultyDto;
 import org.lnu.teaching.web.application.design.deanery.dto.faculty.FacultyDto;
@@ -15,6 +17,7 @@ import org.lnu.teaching.web.application.design.deanery.service.faculty.FacultySe
 
 import java.util.List;
 
+@Log
 @Service
 @AllArgsConstructor
 public class FacultyServiceImpl implements FacultyService {
@@ -30,7 +33,9 @@ public class FacultyServiceImpl implements FacultyService {
     }
     
     @Override
+    @TrackExecution
     public List<FacultyDto> findAll(FacultyFilterOptions filterOptions, Integer limit, Integer offset) {
+        log.info("Inside findAll method!");
         List<FacultyEntity> facultyEntities = facultyRepository.findAll(filterOptions, limit, offset);
         return facultyMapper.toDtoList(facultyEntities);
     }
@@ -42,7 +47,9 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
+    @TrackExecution(isExecutionTimeEnabled = false)
     public FacultyDto find(Long id) {
+        log.info("Inside find method!");
         FacultyEntity facultyEntity = facultyRepository.find(id);
         return facultyMapper.toDto(facultyEntity);
     }

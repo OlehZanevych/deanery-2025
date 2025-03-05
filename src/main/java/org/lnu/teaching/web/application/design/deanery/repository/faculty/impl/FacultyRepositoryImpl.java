@@ -1,5 +1,6 @@
 package org.lnu.teaching.web.application.design.deanery.repository.faculty.impl;
 
+import org.lnu.teaching.web.application.design.deanery.annotation.TrackExecution;
 import org.lnu.teaching.web.application.design.deanery.dto.faculty.FacultyPatch;
 import org.lnu.teaching.web.application.design.deanery.dto.faculty.query.params.FacultyFilterOptions;
 import org.lnu.teaching.web.application.design.deanery.entity.faculty.FacultyEntity;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@TrackExecution
 @AllArgsConstructor
 public class FacultyRepositoryImpl implements FacultyRepository {
 
@@ -138,6 +140,7 @@ public class FacultyRepositoryImpl implements FacultyRepository {
     }
 
     @Override
+    @TrackExecution(inEnabled = false)
     public List<FacultyEntity> findAll(FacultyFilterOptions filterOptions, Integer limit, Integer offset) {
         StringBuilder queryBuilder = new StringBuilder(SELECT_FACULTIES_QUERY);
         MapSqlParameterSource parameters = new MapSqlParameterSource();
