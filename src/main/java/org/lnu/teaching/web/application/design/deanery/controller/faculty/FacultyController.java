@@ -1,5 +1,6 @@
 package org.lnu.teaching.web.application.design.deanery.controller.faculty;
 
+import org.lnu.teaching.web.application.design.deanery.annotation.Auth;
 import org.lnu.teaching.web.application.design.deanery.dto.common.ValueDto;
 import org.lnu.teaching.web.application.design.deanery.dto.faculty.BaseFacultyDto;
 import org.lnu.teaching.web.application.design.deanery.dto.faculty.FacultyDto;
@@ -10,10 +11,21 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.lnu.teaching.web.application.design.deanery.service.faculty.FacultyService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Auth
 @RestController
 @AllArgsConstructor
 @RequestMapping("faculties")
@@ -21,6 +33,7 @@ public class FacultyController {
 
     private final FacultyService facultyService;
 
+    @Auth(isAdmin = true)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FacultyDto create(@RequestBody BaseFacultyDto faculty) {
@@ -56,18 +69,21 @@ public class FacultyController {
         return facultyService.find(id);
     }
 
+    @Auth(isAdmin = true)
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Long id, @RequestBody BaseFacultyDto facultyDto) {
         facultyService.update(id, facultyDto);
     }
 
+    @Auth(isAdmin = true)
     @PatchMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Long id, @RequestBody FacultyPatch facultyPatch) {
         facultyService.patch(id, facultyPatch);
     }
 
+    @Auth(isAdmin = true)
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
