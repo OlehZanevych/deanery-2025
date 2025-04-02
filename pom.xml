@@ -38,6 +38,8 @@
 		<net.ttddyy.datasource-proxy.version>1.10</net.ttddyy.datasource-proxy.version>
 		<jjwt.version>0.12.5</jjwt.version>
 		<io.zonky.test.version>2.5.1</io.zonky.test.version>
+		<surefire.plugin.version>3.5.3</surefire.plugin.version>
+		<jacoco.plugin.version>0.8.12</jacoco.plugin.version>
 
 		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
 	</properties>
@@ -148,6 +150,30 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire.plugin.version}</version>
 			</plugin>
 		</plugins>
 	</build>
